@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weihnachtswünsche 2025 – Florian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* --- FULL CSS (identisch aus der Nachricht) --- */
+    :root {
+      --bg: #0f172a;
+      --bg-light: #111827;
+      --card: #1f2933;
+      --accent: #ef4444;
+      --accent-soft: rgba(239, 68, 68, 0.15);
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --radius-xl: 18px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.35);
+      --transition-fast: 0.3s ease;
+      --transition-slow: 0.6s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at top, #111827 0, #020617 60%);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 20;
+      transition: opacity var(--transition-slow), visibility var(--transition-fast);
+    }
+    .overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .overlay-content {
+      text-align: center;
+      padding: 40px 32px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #020617, #111827);
+      box-shadow: var(--shadow-soft);
+      max-width: 480px;
+      width: 100%;
+      border: 1px solid rgba(248, 250, 252, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .overlay-content::before {
+      content: "";
+      position: absolute; inset: -80px;
+      background:
+        radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.12), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(239, 68, 68, 0.18), transparent 60%);
+      opacity: 0.9; mix-blend-mode: screen;
+    }
+
+    .overlay-inner { position: relative; z-index: 1; }
+    .overlay-title {
+      font-size: clamp(2.1rem, 5vw, 2.7rem);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fef2f2;
+    }
+    .overlay-name {
+      font-size: clamp(1.9rem, 4.5vw, 2.3rem);
+      font-weight: 700; margin-bottom: 1.5rem;
+      background: linear-gradient(120deg, #fee2e2, #fecaca, #f97373);
+      -webkit-background-clip: text; color: transparent;
+    }
+    .overlay-subtitle {
+      font-size: 0.95rem; color: var(--muted); margin-bottom: 2.2rem;
+    }
+
+    .overlay-badge {
+      display: inline-flex; gap: 6px; align-items: center;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(248, 250, 252, 0.12);
+      margin-bottom: 1rem; color: #e5e7eb;
+    }
+    .overlay-badge span {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.9);
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.75rem 1.4rem;
+      border-radius: 999px; cursor: pointer;
+      border: none;
+      font-size: 0.95rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: #fff; box-shadow: 0 12px 25px rgba(248, 113, 113, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(248, 113, 113, 0.6);
+    }
+
+    /* App */
+    .app { width: 100%; max-width: 1120px; margin: auto; opacity: 0; visibility: hidden; transition: 0.6s; }
+    .app.visible { opacity: 1; visibility: visible; }
+
+    header { text-align: center; margin-bottom: 26px; }
+
+    .wishes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    /* Cards */
+    .card { perspective: 1100px; }
+    .card-inner {
+      position: relative;
+      width: 100%; height: 190px;
+      border-radius: var(--radius-xl);
+      transition: transform var(--transition-slow);
+      transform-style: preserve-3d;
+      box-shadow: var(--shadow-soft);
+    }
+    .card.flipped .card-inner { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      border-radius: var(--radius-xl); backface-visibility: hidden;
+      padding: 18px;
+    }
+    .card-front {
+      background: radial-gradient(circle at top left, #1f2937, #020617);
+      border: 1px solid rgba(248, 250, 252, 0.06);
+    }
+    .card-back {
+      background: radial-gradient(circle at top right, #7f1d1d, #111827);
+      border: 1px solid rgba(252, 165, 165, 0.45);
+      transform: rotateY(180deg);
+    }
+
+    .card-button {
+      border-radius: 999px;
+      border: 1px solid rgba(248, 250, 252, 0.12);
+      background: rgba(15, 23, 42, 0.6);
+      padding: 0.55rem 1.1rem;
+      font-size: 0.85rem; cursor: pointer;
+      color: #e5e7eb;
+      transition: 0.3s;
+    }
+    .card-button:hover { background: rgba(30, 64, 175, 0.7); }
+
+  </style>
+</head>
+
+<body>
+  <div class="overlay" id="overlay">
+    <div class="overlay-content">
+      <div class="overlay-inner">
+        <div class="overlay-badge"><span></span> Weihnachts-Spezial </div>
+        <div class="overlay-title">Weihnachtswünsche</div>
+        <div class="overlay-name">2025 · Florian</div>
+        <p class="overlay-subtitle">Klick auf Starten, um alle Wunschkarten zu öffnen.</p>
+        <button class="btn btn-primary" id="startBtn">Starten ➜</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="app" id="app">
+    <header>
+      <h1>Florians Weihnachtswunschliste 2025</h1>
+      <p>Tippe auf eine Karte, um den Wunsch zu sehen.</p>
+    </header>
+
+    <section class="wishes-grid">
+      <!-- We will insert all 10 cards -->
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Edelstahlpfanne</h2>
+            <p>Küche</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Badteppich</h2>
+            <p>Bad</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Erste-Hilfe-Set für die Wohnung</h2>
+            <p>Sicherheit</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Bohrmaschine</h2>
+            <p>Werkzeug</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Badezimmer-Mülleimer</h2>
+            <p>Bad</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Küchenschere</h2>
+            <p>Küche</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Zester (Reibe)</h2>
+            <p>Küche</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Gewürzmühle</h2>
+            <p>Küche</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Elegoo UNO R3 Ultimate Starterkit</h2>
+            <p>Elektronik</p>
+          </div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <button class="card-button">Wunsch anzeigen</button>
+          </div>
+          <div class="card-face card-back">
+            <h2>Lego Bonsai Baum</h2>
+            <p>Lego</p>
+          </div>
+        </div>
+      </article>
+    
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("startBtn").onclick = () => {
+      document.getElementById("overlay").classList.add("hidden");
+      document.getElementById("app").classList.add("visible");
+    };
+
+    document.querySelectorAll(".card").forEach(card => {
+      card.querySelector(".card-button").onclick = () => {
+        card.classList.toggle("flipped");
+      };
+      card.querySelector(".card-back").onclick = () => {
+        card.classList.remove("flipped");
+      };
+    });
+  </script>
+</body>
+</html>
