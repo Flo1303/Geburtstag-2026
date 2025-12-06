@@ -169,6 +169,18 @@
       box-shadow: 0 18px 40px rgba(248, 113, 113, 0.7);
     }
 
+    /* Spiel-Button im Startmenü extra auffällig */
+    .btn-game {
+      background: radial-gradient(circle at top left, #22c55e, #16a34a);
+      color: #f9fafb;
+      box-shadow: 0 12px 28px rgba(34, 197, 94, 0.65);
+    }
+
+    .btn-game:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 18px 40px rgba(34, 197, 94, 0.8);
+    }
+
     .btn-ghost {
       background: rgba(15, 23, 42, 0.8);
       border: 1px solid rgba(148, 163, 184, 0.6);
@@ -233,6 +245,11 @@
       cursor: pointer;
       transition: background var(--transition-fast), color var(--transition-fast),
         transform var(--transition-fast);
+    }
+
+    .tab-btn[data-tab="game"] {
+      /* kleine Farbe schon im Tab, damit „Spiel spielen“ besser auffällt */
+      color: #f97316;
     }
 
     .tab-btn.active {
@@ -446,14 +463,14 @@
         <div class="overlay-name">2025 · Florian</div>
         <p class="overlay-subtitle">
           Entdecke deine Wunschkarten <strong>oder</strong> spiele einen kleinen
-          Weihnachts-Endless-Runner und sammle Geschenke.
+          Weihnachts-Endless-Runner: Geschenke sammeln, Hindernissen ausweichen.
         </p>
         <div class="overlay-actions">
-          <button class="btn btn-primary" id="startWishlist">
+          <button class="btn btn-ghost" id="startWishlist">
             Wunschkarten ansehen
           </button>
-          <button class="btn btn-ghost" id="startGameDirect">
-            Direkt ins Spiel
+          <button class="btn btn-game" id="startGameDirect">
+            🎮 Spiel spielen
           </button>
         </div>
       </div>
@@ -477,9 +494,7 @@
 
     <!-- Wunschliste -->
     <section class="section active" id="wishesSection">
-      <div class="wishes-grid" id="wishesGrid">
-        <!-- Karten – Vorderseite zeigt Titel, Rückseite eine kleine Beschreibung -->
-      </div>
+      <div class="wishes-grid" id="wishesGrid"></div>
     </section>
 
     <!-- Spiel -->
@@ -494,14 +509,14 @@
         </div>
         <div class="game-controls">
           <span>
-            Steuerung: <strong>Leertaste</strong> oder <strong>Pfeil ↑</strong>, auf dem Handy einfach
-            auf das Spielfeld tippen.
+            Steuerung: <strong>Leertaste</strong> oder <strong>Pfeil ↑</strong>,
+            auf dem Handy einfach aufs Spielfeld tippen.
           </span>
           <button class="btn btn-primary" id="gameStartButton">Spiel starten</button>
         </div>
         <canvas id="gameCanvas" width="900" height="260"></canvas>
         <p class="game-message" id="gameMessage">
-          Sammle möglichst viele Geschenke, ohne den Boden zu berühren wenn du landest – es wird immer schneller!
+          Sammle Geschenke, weiche Hindernissen aus – je länger du überlebst, desto schneller wird alles.
         </p>
       </div>
     </section>
@@ -509,7 +524,7 @@
 
   <script>
     // -------------------------
-    // Daten für Wunschkarten
+    // Wunschkarten
     // -------------------------
     const wishes = [
       {
@@ -593,7 +608,7 @@
     });
 
     // -------------------------
-    // Tabs & Overlay
+    // Overlay & Tabs
     // -------------------------
     const overlay = document.getElementById("overlay");
     const app = document.getElementById("app");
@@ -630,21 +645,18 @@
         wishesSection.classList.remove("active");
         gameSection.classList.add("active");
         hintText.textContent =
-          "Tipp: Starte das Spiel und springe über den Boden, um die Geschenke zu erwischen!";
+          "Tipp: Spring über Hindernisse und sammle Geschenke. Kollision = Game Over!";
       }
     }
 
     tabButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         setActiveTab(btn.dataset.tab);
-        if (btn.dataset.tab === "game") {
-          // Noch kein Auto-Start hier – der Nutzer klickt dann auf "Spiel starten"
-        }
       });
     });
 
     // -------------------------
-    // Einfaches Endless-Runner-Spiel
+    // Endless Runner mit Hindernissen
     // -------------------------
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
@@ -655,7 +667,7 @@
 
     let running = false;
     let lastTime = 0;
-    let player, gifts, speed, spawnTimer, score, bestScore, groundY;
+    let player, gifts, obstacles, speed, giftTimer, obstacleTimer, score, bestScore, groundY;
 
     function resetGameState() {
       groundY = canvas.height - 40;
@@ -668,16 +680,17 @@
         onGround: true
       };
       gifts = [];
-      speed = 4.6;
-      spawnTimer = 0;
+      obstacles = [];
+      speed = 4.5;
+      giftTimer = 0;
+      obstacleTimer = 0;
       score = 0;
       scoreBadge.textContent = "Score: 0";
       gameMessage.textContent =
-        "Sammle Geschenke, indem du sie berührst. Je länger du durchhältst, desto schneller wird es.";
+        "Sammle Geschenke und weiche Hindernissen aus. Jede Kollision beendet das Spiel.";
     }
 
     function drawBackground() {
-      // Himmel-Gradient
       const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
       grad.addColorStop(0, "#020617");
       grad.addColorStop(1, "#020617");
@@ -721,18 +734,15 @@
     }
 
     function drawPlayer() {
-      // Körper
-      ctx.fillStyle = "#e11d48"; // Mantel
+      ctx.fillStyle = "#e11d48";
       ctx.fillRect(player.x, player.y, player.width, player.height);
 
-      // Mütze
       ctx.fillStyle = "#f9fafb";
       ctx.fillRect(player.x + 4, player.y - 10, player.width - 8, 8);
       ctx.beginPath();
       ctx.arc(player.x + player.width / 2, player.y - 13, 5, 0, Math.PI * 2);
       ctx.fill();
 
-      // Gürtel
       ctx.fillStyle = "#020617";
       ctx.fillRect(player.x, player.y + player.height / 2, player.width, 5);
       ctx.fillStyle = "#facc15";
@@ -754,8 +764,28 @@
       }
     }
 
+    function drawObstacles() {
+      for (const o of obstacles) {
+        // Einfacher Schneehaufen / Block
+        ctx.fillStyle = o.color;
+        ctx.fillRect(o.x, o.y, o.width, o.height);
+        ctx.fillStyle = "#e5e7eb";
+        ctx.beginPath();
+        ctx.ellipse(
+          o.x + o.width / 2,
+          o.y + 4,
+          o.width / 2,
+          o.height / 3,
+          0,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+      }
+    }
+
     function spawnGift() {
-      const size = 28;
+      const size = 26;
       gifts.push({
         x: canvas.width + 40,
         y: groundY - size - 4 - Math.random() * 20,
@@ -764,9 +794,31 @@
       });
     }
 
+    function spawnObstacle() {
+      const width = 26 + Math.random() * 14;
+      const height = 30 + Math.random() * 20;
+      obstacles.push({
+        x: canvas.width + 60,
+        y: groundY - height,
+        width,
+        height,
+        color: "#0f172a"
+      });
+    }
+
+    function rectsOverlap(a, b) {
+      return (
+        a.x < b.x + b.width &&
+        a.x + a.width > b.x &&
+        a.y < b.y + b.height &&
+        a.y + a.height > b.y
+      );
+    }
+
     function update(dt) {
-      // Schwerkraft
-      player.vy += 40 * dt; // gravity
+      // Physik – geringere Sprunghöhe
+      const gravity = 55;
+      player.vy += gravity * dt;
       player.y += player.vy;
 
       if (player.y + player.height >= groundY) {
@@ -775,24 +827,35 @@
         player.onGround = true;
       }
 
-      // Spawn Gifts
-      spawnTimer += dt;
-      const spawnInterval = Math.max(0.6, 1.4 - score * 0.03);
-      if (spawnTimer > spawnInterval) {
+      // Gifts spawnen
+      giftTimer += dt;
+      const giftInterval = Math.max(0.7, 1.4 - score * 0.03);
+      if (giftTimer > giftInterval) {
         spawnGift();
-        spawnTimer = 0;
-        speed += 0.05;
+        giftTimer = 0;
       }
 
-      // Bewegung der Geschenke
+      // Hindernisse spawnen
+      obstacleTimer += dt;
+      const obstacleInterval = Math.max(0.9, 2.3 - score * 0.05);
+      if (obstacleTimer > obstacleInterval) {
+        spawnObstacle();
+        obstacleTimer = 0;
+      }
+
+      // Bewegung
+      const worldSpeed = speed * 60 * dt;
+
       for (const g of gifts) {
-        g.x -= speed * 60 * dt;
+        g.x -= worldSpeed;
+      }
+      for (const o of obstacles) {
+        o.x -= worldSpeed;
       }
 
-      // Geschenke entfernen & Kollision checken
+      // Kollisionsprüfung Geschenke + entfernen
       for (let i = gifts.length - 1; i >= 0; i--) {
         const g = gifts[i];
-        // Collision
         if (
           player.x < g.x + g.size &&
           player.x + player.width > g.x &&
@@ -807,10 +870,24 @@
             bestBadge.textContent = "Best: " + bestScore;
             localStorage.setItem("xmasBestScore", String(bestScore));
           }
+          speed += 0.04;
           continue;
         }
         if (g.x + g.size < -40) {
           gifts.splice(i, 1);
+        }
+      }
+
+      // Kollisionsprüfung Hindernisse
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        const o = obstacles[i];
+        if (rectsOverlap(player, o)) {
+          // Game Over
+          stopGame(true);
+          return;
+        }
+        if (o.x + o.width < -60) {
+          obstacles.splice(i, 1);
         }
       }
     }
@@ -823,6 +900,7 @@
       drawBackground();
       drawPlayer();
       drawGifts();
+      drawObstacles();
       update(dt);
 
       requestAnimationFrame(gameLoop);
@@ -831,7 +909,7 @@
     function jump() {
       if (!running) return;
       if (player.onGround) {
-        player.vy = -15;
+        player.vy = -12; // deutlich flacherer Sprung
         player.onGround = false;
       }
     }
@@ -843,19 +921,26 @@
       lastTime = performance.now();
       gameStartButton.textContent = "Läuft...";
       gameMessage.textContent =
-        "Sammle Geschenke – mal sehen, wie hoch dein Score wird!";
+        "Sammle Geschenke, spring über Hindernisse – mal sehen, wie hoch dein Score wird!";
       drawBackground();
       drawPlayer();
       requestAnimationFrame(gameLoop);
     }
 
-    function stopGame() {
+    function stopGame(byObstacle = false) {
       running = false;
       gameStartButton.textContent = "Nochmal spielen";
-      gameMessage.textContent =
-        "Runde vorbei! Dein Score: " +
-        score +
-        ". Klicke auf „Nochmal spielen“, um eine neue Runde zu starten.";
+      if (byObstacle) {
+        gameMessage.textContent =
+          "Game Over – du bist gegen ein Hindernis gelaufen. Score: " +
+          score +
+          ". Klicke auf „Nochmal spielen“ für eine neue Runde.";
+      } else {
+        gameMessage.textContent =
+          "Runde beendet. Score: " +
+          score +
+          ". Klicke auf „Nochmal spielen“, um erneut zu starten.";
+      }
     }
 
     // Bestscore laden
@@ -872,33 +957,24 @@
       }
     });
 
-    // Jump / Stop
     window.addEventListener("keydown", (e) => {
       if (e.code === "Space" || e.code === "ArrowUp") {
         e.preventDefault();
-        if (!running) {
-          startGame();
-        } else {
-          jump();
-        }
+        if (!running) startGame();
+        else jump();
       } else if (e.code === "Escape") {
-        if (running) stopGame();
+        if (running) stopGame(false);
       }
     });
 
-    // Tap on canvas -> Jump/Start
     canvas.addEventListener("click", () => {
-      if (!running) {
-        startGame();
-      } else {
-        jump();
-      }
+      if (!running) startGame();
+      else jump();
     });
 
-    // Wenn Fenster/Tab unsichtbar wird, Spiel stoppen (damit es nicht davonrennt)
     document.addEventListener("visibilitychange", () => {
       if (document.hidden && running) {
-        stopGame();
+        stopGame(false);
       }
     });
   </script>
