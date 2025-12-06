@@ -5,49 +5,62 @@
   <title>Weihnachtswünsche 2025 – Florian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* --- FULL CSS (identisch aus der Nachricht) --- */
     :root {
-      --bg: #0f172a;
-      --bg-light: #111827;
+      --bg: #020617;
       --card: #1f2933;
       --accent: #ef4444;
-      --accent-soft: rgba(239, 68, 68, 0.15);
+      --accent2: #f97316;
       --text: #f9fafb;
       --muted: #9ca3af;
-      --radius-xl: 18px;
+      --radius-xl: 22px;
       --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.35);
-      --transition-fast: 0.3s ease;
+      --transition-fast: 0.25s ease;
       --transition-slow: 0.6s ease;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
       background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       align-items: stretch;
       justify-content: center;
-      padding: 20px;
+      padding: 18px;
     }
 
-    /* Overlay */
+    /* Overlay (Start) */
     .overlay {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: radial-gradient(circle at top, #111827 0, #020617 60%);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 20;
       transition: opacity var(--transition-slow), visibility var(--transition-fast);
     }
-    .overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
 
     .overlay-content {
       text-align: center;
-      padding: 40px 32px;
-      border-radius: 24px;
+      padding: 40px 32px 30px;
+      border-radius: 28px;
       background: linear-gradient(145deg, #020617, #111827);
       box-shadow: var(--shadow-soft);
-      max-width: 480px;
+      max-width: 520px;
       width: 100%;
       border: 1px solid rgba(248, 250, 252, 0.06);
       position: relative;
@@ -56,70 +69,194 @@
 
     .overlay-content::before {
       content: "";
-      position: absolute; inset: -80px;
+      position: absolute;
+      inset: -80px;
       background:
-        radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.12), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(239, 68, 68, 0.18), transparent 60%);
-      opacity: 0.9; mix-blend-mode: screen;
+        radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(239, 68, 68, 0.28), transparent 60%);
+      opacity: 0.9;
+      mix-blend-mode: screen;
+      pointer-events: none;
     }
 
-    .overlay-inner { position: relative; z-index: 1; }
-    .overlay-title {
-      font-size: clamp(2.1rem, 5vw, 2.7rem);
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #fef2f2;
-    }
-    .overlay-name {
-      font-size: clamp(1.9rem, 4.5vw, 2.3rem);
-      font-weight: 700; margin-bottom: 1.5rem;
-      background: linear-gradient(120deg, #fee2e2, #fecaca, #f97373);
-      -webkit-background-clip: text; color: transparent;
-    }
-    .overlay-subtitle {
-      font-size: 0.95rem; color: var(--muted); margin-bottom: 2.2rem;
+    .overlay-inner {
+      position: relative;
+      z-index: 1;
     }
 
     .overlay-badge {
-      display: inline-flex; gap: 6px; align-items: center;
-      padding: 5px 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
       border-radius: 999px;
       font-size: 0.78rem;
-      text-transform: uppercase; letter-spacing: 0.14em;
-      background: rgba(15, 23, 42, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(248, 250, 252, 0.12);
-      margin-bottom: 1rem; color: #e5e7eb;
+      margin-bottom: 1rem;
+      color: #e5e7eb;
     }
+
     .overlay-badge span {
-      width: 8px; height: 8px; border-radius: 999px;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
       background: var(--accent);
       box-shadow: 0 0 12px rgba(239, 68, 68, 0.9);
     }
 
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 0.75rem 1.4rem;
-      border-radius: 999px; cursor: pointer;
-      border: none;
-      font-size: 0.95rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    .overlay-title {
+      font-size: clamp(2.2rem, 5vw, 2.8rem);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fef2f2;
     }
+
+    .overlay-name {
+      font-size: clamp(1.9rem, 4.5vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 1.3rem;
+      background: linear-gradient(120deg, #fee2e2, #fecaca, #f97373);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .overlay-subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .overlay-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.8rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        color var(--transition-fast),
+        opacity var(--transition-fast);
+    }
+
     .btn-primary {
       background: linear-gradient(135deg, #ef4444, #f97316);
-      color: #fff; box-shadow: 0 12px 25px rgba(248, 113, 113, 0.4);
+      color: #fff;
+      box-shadow: 0 12px 25px rgba(248, 113, 113, 0.5);
     }
+
     .btn-primary:hover {
       transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 18px 40px rgba(248, 113, 113, 0.6);
+      box-shadow: 0 18px 40px rgba(248, 113, 113, 0.7);
     }
 
-    /* App */
-    .app { width: 100%; max-width: 1120px; margin: auto; opacity: 0; visibility: hidden; transition: 0.6s; }
-    .app.visible { opacity: 1; visibility: visible; }
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: #e5e7eb;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.6);
+    }
 
-    header { text-align: center; margin-bottom: 26px; }
+    .btn-ghost:hover {
+      transform: translateY(-1px);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    /* App Layout */
+    .app {
+      width: 100%;
+      max-width: 1120px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity var(--transition-slow), transform var(--transition-slow);
+      visibility: hidden;
+    }
+
+    .app.visible {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: clamp(1.9rem, 3.5vw, 2.4rem);
+      margin-bottom: 0.4rem;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .tabs {
+      display: inline-flex;
+      padding: 4px;
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      margin: 18px auto 24px;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.7);
+    }
+
+    .tab-btn {
+      border: none;
+      padding: 0.5rem 1.4rem;
+      border-radius: 999px;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+      opacity: 0.9;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    /* Wunschkarten */
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
 
     .wishes-grid {
       display: grid;
@@ -127,206 +264,642 @@
       gap: 18px;
     }
 
-    /* Cards */
-    .card { perspective: 1100px; }
+    .card {
+      background: transparent;
+      perspective: 1100px;
+      cursor: pointer;
+    }
+
     .card-inner {
       position: relative;
-      width: 100%; height: 190px;
+      width: 100%;
+      height: 180px;
       border-radius: var(--radius-xl);
-      transition: transform var(--transition-slow);
+      transition: transform var(--transition-slow), box-shadow var(--transition-fast);
       transform-style: preserve-3d;
       box-shadow: var(--shadow-soft);
     }
-    .card.flipped .card-inner { transform: rotateY(180deg); }
 
-    .card-face {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      border-radius: var(--radius-xl); backface-visibility: hidden;
-      padding: 18px;
+    .card:hover .card-inner {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.55);
     }
-    .card-front {
-      background: radial-gradient(circle at top left, #1f2937, #020617);
-      border: 1px solid rgba(248, 250, 252, 0.06);
-    }
-    .card-back {
-      background: radial-gradient(circle at top right, #7f1d1d, #111827);
-      border: 1px solid rgba(252, 165, 165, 0.45);
+
+    .card.flipped .card-inner {
       transform: rotateY(180deg);
     }
 
-    .card-button {
-      border-radius: 999px;
-      border: 1px solid rgba(248, 250, 252, 0.12);
-      background: rgba(15, 23, 42, 0.6);
-      padding: 0.55rem 1.1rem;
-      font-size: 0.85rem; cursor: pointer;
-      color: #e5e7eb;
-      transition: 0.3s;
+    .card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-xl);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      backface-visibility: hidden;
     }
-    .card-button:hover { background: rgba(30, 64, 175, 0.7); }
 
+    .card-front {
+      background: radial-gradient(circle at top left, rgba(220, 38, 38, 0.8), #020617);
+      border: 1px solid rgba(248, 250, 252, 0.08);
+    }
+
+    .card-back {
+      background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.85), #020617);
+      border: 1px solid rgba(191, 219, 254, 0.6);
+      transform: rotateY(180deg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-tag {
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      opacity: 0.9;
+      margin-bottom: 0.3rem;
+    }
+
+    .card-text {
+      font-size: 0.86rem;
+      text-align: center;
+      color: #fef2f2;
+    }
+
+    .card-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #fee2e2;
+      margin-bottom: 0.6rem;
+      opacity: 0.9;
+    }
+
+    /* Spielbereich */
+    .game-wrapper {
+      margin: 0 auto;
+      max-width: 960px;
+      background: radial-gradient(circle at top, #111827, #020617);
+      border-radius: 26px;
+      padding: 18px 18px 22px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    }
+
+    .game-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .game-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .game-stats {
+      display: flex;
+      gap: 18px;
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+    }
+
+    .game-controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .game-controls .btn {
+      font-size: 0.85rem;
+      padding: 0.5rem 1.1rem;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      border-radius: 18px;
+      background: linear-gradient(to top, #020617 30%, #0b1120 100%);
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      display: block;
+      margin: 0 auto;
+    }
+
+    .game-message {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      color: #e5e7eb;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 12px;
+      }
+
+      .game-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .game-stats {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .card-inner {
+        height: 170px;
+      }
+    }
   </style>
 </head>
-
 <body>
+  <!-- Start-Overlay -->
   <div class="overlay" id="overlay">
     <div class="overlay-content">
       <div class="overlay-inner">
-        <div class="overlay-badge"><span></span> Weihnachts-Spezial </div>
+        <div class="overlay-badge">
+          <span></span>
+          Weihnachts-Spezial
+        </div>
         <div class="overlay-title">Weihnachtswünsche</div>
         <div class="overlay-name">2025 · Florian</div>
-        <p class="overlay-subtitle">Klick auf Starten, um alle Wunschkarten zu öffnen.</p>
-        <button class="btn btn-primary" id="startBtn">Starten ➜</button>
+        <p class="overlay-subtitle">
+          Entdecke deine Wunschkarten <strong>oder</strong> spiele einen kleinen
+          Weihnachts-Endless-Runner und sammle Geschenke.
+        </p>
+        <div class="overlay-actions">
+          <button class="btn btn-primary" id="startWishlist">
+            Wunschkarten ansehen
+          </button>
+          <button class="btn btn-ghost" id="startGameDirect">
+            Direkt ins Spiel
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- App -->
   <main class="app" id="app">
     <header>
       <h1>Florians Weihnachtswunschliste 2025</h1>
-      <p>Tippe auf eine Karte, um den Wunsch zu sehen.</p>
+      <p>Tippe auf eine Karte oder wechsle zum Spiel.</p>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="wishes">Wunschliste</button>
+        <button class="tab-btn" data-tab="game">Spiel spielen</button>
+      </div>
     </header>
 
-    <section class="wishes-grid">
-      <!-- We will insert all 10 cards -->
+    <p class="hint" id="hintText">
+      Tipp: Tippe auf eine Karte, um die Rückseite mit der Beschreibung zu sehen.
+    </p>
 
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Edelstahlpfanne</h2>
-            <p>Küche</p>
-          </div>
-        </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Badteppich</h2>
-            <p>Bad</p>
+    <!-- Wunschliste -->
+    <section class="section active" id="wishesSection">
+      <div class="wishes-grid" id="wishesGrid">
+        <!-- Karten – Vorderseite zeigt Titel, Rückseite eine kleine Beschreibung -->
+      </div>
+    </section>
+
+    <!-- Spiel -->
+    <section class="section" id="gameSection">
+      <div class="game-wrapper">
+        <div class="game-header">
+          <div class="game-title">🎅 Geschenk-Jagd – Endless Runner</div>
+          <div class="game-stats">
+            <div class="badge" id="scoreBadge">Score: 0</div>
+            <div class="badge" id="bestBadge">Best: 0</div>
           </div>
         </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Erste-Hilfe-Set für die Wohnung</h2>
-            <p>Sicherheit</p>
-          </div>
+        <div class="game-controls">
+          <span>
+            Steuerung: <strong>Leertaste</strong> oder <strong>Pfeil ↑</strong>, auf dem Handy einfach
+            auf das Spielfeld tippen.
+          </span>
+          <button class="btn btn-primary" id="gameStartButton">Spiel starten</button>
         </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Bohrmaschine</h2>
-            <p>Werkzeug</p>
-          </div>
-        </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Badezimmer-Mülleimer</h2>
-            <p>Bad</p>
-          </div>
-        </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Küchenschere</h2>
-            <p>Küche</p>
-          </div>
-        </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Zester (Reibe)</h2>
-            <p>Küche</p>
-          </div>
-        </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Gewürzmühle</h2>
-            <p>Küche</p>
-          </div>
-        </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Elegoo UNO R3 Ultimate Starterkit</h2>
-            <p>Elektronik</p>
-          </div>
-        </div>
-      </article>
-    
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-face card-front">
-            <button class="card-button">Wunsch anzeigen</button>
-          </div>
-          <div class="card-face card-back">
-            <h2>Lego Bonsai Baum</h2>
-            <p>Lego</p>
-          </div>
-        </div>
-      </article>
-    
+        <canvas id="gameCanvas" width="900" height="260"></canvas>
+        <p class="game-message" id="gameMessage">
+          Sammle möglichst viele Geschenke, ohne den Boden zu berühren wenn du landest – es wird immer schneller!
+        </p>
+      </div>
     </section>
   </main>
 
   <script>
-    document.getElementById("startBtn").onclick = () => {
-      document.getElementById("overlay").classList.add("hidden");
-      document.getElementById("app").classList.add("visible");
-    };
+    // -------------------------
+    // Daten für Wunschkarten
+    // -------------------------
+    const wishes = [
+      {
+        title: "Edelstahlpfanne",
+        tag: "Küche",
+        text: "Hochwertige Edelstahlpfanne für scharfes Anbraten und langlebiges Kochen."
+      },
+      {
+        title: "Badteppich",
+        tag: "Bad",
+        text: "Kuscheliger, rutschfester Badteppich für warme Füße nach dem Duschen."
+      },
+      {
+        title: "Erste-Hilfe-Set für die Wohnung",
+        tag: "Sicherheit",
+        text: "Kompaktes, vollständiges Erste-Hilfe-Set – für kleine Notfälle im Alltag."
+      },
+      {
+        title: "Bohrmaschine",
+        tag: "Werkzeug",
+        text: "Zuverlässige Bohrmaschine für Bilder, Regale und alle Projekte in der Wohnung."
+      },
+      {
+        title: "Badezimmer-Mülleimer",
+        tag: "Bad",
+        text: "Schlichter, moderner Mülleimer fürs Bad – idealerweise mit Deckel."
+      },
+      {
+        title: "Küchenschere",
+        tag: "Küche",
+        text: "Robuste, scharfe Küchenschere, perfekt zum Kochen und Verpackungen öffnen."
+      },
+      {
+        title: "Zester (Reibe)",
+        tag: "Küche",
+        text: "Feine Reibe/Zester für Zitronenabrieb, Knoblauch, Ingwer oder Parmesan."
+      },
+      {
+        title: "Gewürzmühle",
+        tag: "Küche",
+        text: "Hochwertige Mühle für frische Pfeffer- oder Salzgewürze beim Kochen."
+      },
+      {
+        title: "Elegoo UNO R3 Ultimate Starterkit",
+        tag: "Elektronik",
+        text: "Umfangreiches Arduino-kompatibles Kit für Elektronik- und Programmierprojekte."
+      },
+      {
+        title: "Lego Bonsai Baum",
+        tag: "Lego",
+        text: "Deko-Set zum Bauen und Entspannen – perfekt für Schreibtisch oder Wohnzimmer."
+      }
+    ];
 
-    document.querySelectorAll(".card").forEach(card => {
-      card.querySelector(".card-button").onclick = () => {
-        card.classList.toggle("flipped");
+    const wishesGrid = document.getElementById("wishesGrid");
+
+    wishes.forEach((wish, index) => {
+      const article = document.createElement("article");
+      article.className = "card";
+
+      article.innerHTML = `
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="card-title">${wish.title}</div>
+            <div class="card-tag">${wish.tag}</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="card-label">Wunsch #${index + 1}</div>
+            <div class="card-title">${wish.title}</div>
+            <div class="card-tag">${wish.tag}</div>
+            <p class="card-text">${wish.text}</p>
+          </div>
+        </div>
+      `;
+
+      article.addEventListener("click", () => {
+        article.classList.toggle("flipped");
+      });
+
+      wishesGrid.appendChild(article);
+    });
+
+    // -------------------------
+    // Tabs & Overlay
+    // -------------------------
+    const overlay = document.getElementById("overlay");
+    const app = document.getElementById("app");
+    const startWishlistBtn = document.getElementById("startWishlist");
+    const startGameDirectBtn = document.getElementById("startGameDirect");
+
+    function showAppAndTab(tab) {
+      overlay.classList.add("hidden");
+      app.classList.add("visible");
+      setActiveTab(tab);
+    }
+
+    startWishlistBtn.addEventListener("click", () => showAppAndTab("wishes"));
+    startGameDirectBtn.addEventListener("click", () => {
+      showAppAndTab("game");
+      startGame();
+    });
+
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const wishesSection = document.getElementById("wishesSection");
+    const gameSection = document.getElementById("gameSection");
+    const hintText = document.getElementById("hintText");
+
+    function setActiveTab(tab) {
+      tabButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.tab === tab);
+      });
+      if (tab === "wishes") {
+        wishesSection.classList.add("active");
+        gameSection.classList.remove("active");
+        hintText.textContent =
+          "Tipp: Tippe auf eine Karte, um die Rückseite mit der Beschreibung zu sehen.";
+      } else {
+        wishesSection.classList.remove("active");
+        gameSection.classList.add("active");
+        hintText.textContent =
+          "Tipp: Starte das Spiel und springe über den Boden, um die Geschenke zu erwischen!";
+      }
+    }
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setActiveTab(btn.dataset.tab);
+        if (btn.dataset.tab === "game") {
+          // Noch kein Auto-Start hier – der Nutzer klickt dann auf "Spiel starten"
+        }
+      });
+    });
+
+    // -------------------------
+    // Einfaches Endless-Runner-Spiel
+    // -------------------------
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const scoreBadge = document.getElementById("scoreBadge");
+    const bestBadge = document.getElementById("bestBadge");
+    const gameMessage = document.getElementById("gameMessage");
+    const gameStartButton = document.getElementById("gameStartButton");
+
+    let running = false;
+    let lastTime = 0;
+    let player, gifts, speed, spawnTimer, score, bestScore, groundY;
+
+    function resetGameState() {
+      groundY = canvas.height - 40;
+      player = {
+        x: 90,
+        y: groundY - 38,
+        width: 36,
+        height: 38,
+        vy: 0,
+        onGround: true
       };
-      card.querySelector(".card-back").onclick = () => {
-        card.classList.remove("flipped");
-      };
+      gifts = [];
+      speed = 4.6;
+      spawnTimer = 0;
+      score = 0;
+      scoreBadge.textContent = "Score: 0";
+      gameMessage.textContent =
+        "Sammle Geschenke, indem du sie berührst. Je länger du durchhältst, desto schneller wird es.";
+    }
+
+    function drawBackground() {
+      // Himmel-Gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      grad.addColorStop(0, "#020617");
+      grad.addColorStop(1, "#020617");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Sterne
+      ctx.fillStyle = "rgba(248,250,252,0.7)";
+      for (let i = 0; i < 40; i++) {
+        const x = (i * 47 + (Date.now() / 30)) % canvas.width;
+        const y = (i * 23) % (canvas.height / 2);
+        ctx.fillRect(x, y, 2, 2);
+      }
+
+      // Boden
+      ctx.fillStyle = "#111827";
+      ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
+
+      // Schneehügel
+      ctx.fillStyle = "#e5e7eb";
+      ctx.beginPath();
+      ctx.ellipse(
+        canvas.width * 0.2,
+        groundY + 20,
+        80,
+        22,
+        0,
+        0,
+        Math.PI * 2
+      );
+      ctx.ellipse(
+        canvas.width * 0.7,
+        groundY + 24,
+        110,
+        28,
+        0,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
+    }
+
+    function drawPlayer() {
+      // Körper
+      ctx.fillStyle = "#e11d48"; // Mantel
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+
+      // Mütze
+      ctx.fillStyle = "#f9fafb";
+      ctx.fillRect(player.x + 4, player.y - 10, player.width - 8, 8);
+      ctx.beginPath();
+      ctx.arc(player.x + player.width / 2, player.y - 13, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Gürtel
+      ctx.fillStyle = "#020617";
+      ctx.fillRect(player.x, player.y + player.height / 2, player.width, 5);
+      ctx.fillStyle = "#facc15";
+      ctx.fillRect(player.x + player.width / 2 - 5, player.y + player.height / 2, 10, 5);
+    }
+
+    function drawGifts() {
+      for (const g of gifts) {
+        ctx.fillStyle = g.color;
+        ctx.fillRect(g.x, g.y, g.size, g.size);
+        ctx.strokeStyle = "#f9fafb";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(g.x + g.size / 2, g.y);
+        ctx.lineTo(g.x + g.size / 2, g.y + g.size);
+        ctx.moveTo(g.x, g.y + g.size / 2);
+        ctx.lineTo(g.x + g.size, g.y + g.size / 2);
+        ctx.stroke();
+      }
+    }
+
+    function spawnGift() {
+      const size = 28;
+      gifts.push({
+        x: canvas.width + 40,
+        y: groundY - size - 4 - Math.random() * 20,
+        size,
+        color: Math.random() > 0.5 ? "#22c55e" : "#3b82f6"
+      });
+    }
+
+    function update(dt) {
+      // Schwerkraft
+      player.vy += 40 * dt; // gravity
+      player.y += player.vy;
+
+      if (player.y + player.height >= groundY) {
+        player.y = groundY - player.height;
+        player.vy = 0;
+        player.onGround = true;
+      }
+
+      // Spawn Gifts
+      spawnTimer += dt;
+      const spawnInterval = Math.max(0.6, 1.4 - score * 0.03);
+      if (spawnTimer > spawnInterval) {
+        spawnGift();
+        spawnTimer = 0;
+        speed += 0.05;
+      }
+
+      // Bewegung der Geschenke
+      for (const g of gifts) {
+        g.x -= speed * 60 * dt;
+      }
+
+      // Geschenke entfernen & Kollision checken
+      for (let i = gifts.length - 1; i >= 0; i--) {
+        const g = gifts[i];
+        // Collision
+        if (
+          player.x < g.x + g.size &&
+          player.x + player.width > g.x &&
+          player.y < g.y + g.size &&
+          player.y + player.height > g.y
+        ) {
+          gifts.splice(i, 1);
+          score++;
+          scoreBadge.textContent = "Score: " + score;
+          if (score > bestScore) {
+            bestScore = score;
+            bestBadge.textContent = "Best: " + bestScore;
+            localStorage.setItem("xmasBestScore", String(bestScore));
+          }
+          continue;
+        }
+        if (g.x + g.size < -40) {
+          gifts.splice(i, 1);
+        }
+      }
+    }
+
+    function gameLoop(timestamp) {
+      if (!running) return;
+      const dt = (timestamp - lastTime) / 1000;
+      lastTime = timestamp;
+
+      drawBackground();
+      drawPlayer();
+      drawGifts();
+      update(dt);
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    function jump() {
+      if (!running) return;
+      if (player.onGround) {
+        player.vy = -15;
+        player.onGround = false;
+      }
+    }
+
+    function startGame() {
+      if (running) return;
+      resetGameState();
+      running = true;
+      lastTime = performance.now();
+      gameStartButton.textContent = "Läuft...";
+      gameMessage.textContent =
+        "Sammle Geschenke – mal sehen, wie hoch dein Score wird!";
+      drawBackground();
+      drawPlayer();
+      requestAnimationFrame(gameLoop);
+    }
+
+    function stopGame() {
+      running = false;
+      gameStartButton.textContent = "Nochmal spielen";
+      gameMessage.textContent =
+        "Runde vorbei! Dein Score: " +
+        score +
+        ". Klicke auf „Nochmal spielen“, um eine neue Runde zu starten.";
+    }
+
+    // Bestscore laden
+    bestScore = parseInt(localStorage.getItem("xmasBestScore") || "0", 10);
+    bestBadge.textContent = "Best: " + bestScore;
+    resetGameState();
+    drawBackground();
+    drawPlayer();
+
+    // Events
+    gameStartButton.addEventListener("click", () => {
+      if (!running) {
+        startGame();
+      }
+    });
+
+    // Jump / Stop
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space" || e.code === "ArrowUp") {
+        e.preventDefault();
+        if (!running) {
+          startGame();
+        } else {
+          jump();
+        }
+      } else if (e.code === "Escape") {
+        if (running) stopGame();
+      }
+    });
+
+    // Tap on canvas -> Jump/Start
+    canvas.addEventListener("click", () => {
+      if (!running) {
+        startGame();
+      } else {
+        jump();
+      }
+    });
+
+    // Wenn Fenster/Tab unsichtbar wird, Spiel stoppen (damit es nicht davonrennt)
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && running) {
+        stopGame();
+      }
     });
   </script>
 </body>
