@@ -2,20 +2,21 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Weihnachtswünsche 2025 – Florian</title>
+  <title>Florians Weihnachtswünsche 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
       --bg: #020617;
-      --card: #1f2933;
+      --card: #111827;
       --accent: #ef4444;
       --accent2: #f97316;
+      --accent3: #22c55e;
       --text: #f9fafb;
       --muted: #9ca3af;
       --radius-xl: 22px;
       --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.35);
       --transition-fast: 0.25s ease;
-      --transition-slow: 0.6s ease;
+      --transition-slow: 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
     * {
@@ -36,15 +37,16 @@
       padding: 18px;
     }
 
-    /* Overlay (Start) */
+    /* ---------- OVERLAY (START) ---------- */
+
     .overlay {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, #111827 0, #020617 60%);
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), #020617 70%);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 20;
+      z-index: 30;
       transition: opacity var(--transition-slow), visibility var(--transition-fast);
     }
 
@@ -54,100 +56,99 @@
       pointer-events: none;
     }
 
-    .overlay-content {
-      text-align: center;
-      padding: 40px 32px 30px;
-      border-radius: 28px;
-      background: linear-gradient(145deg, #020617, #111827);
-      box-shadow: var(--shadow-soft);
-      max-width: 520px;
-      width: 100%;
-      border: 1px solid rgba(248, 250, 252, 0.06);
+    .overlay-box {
       position: relative;
+      width: min(520px, 100%);
+      padding: 34px 28px 26px;
+      border-radius: 26px;
+      background: radial-gradient(circle at 0 0, #111827, #020617 55%);
       overflow: hidden;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.8);
+      border: 1px solid rgba(248,250,252,0.08);
     }
 
-    .overlay-content::before {
+    .overlay-box::before {
       content: "";
       position: absolute;
-      inset: -80px;
+      inset: -120px;
       background:
-        radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.16), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(239, 68, 68, 0.28), transparent 60%);
-      opacity: 0.9;
+        radial-gradient(circle at 0 0, rgba(248,250,252,0.15), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(248,113,113,0.35), transparent 60%);
       mix-blend-mode: screen;
+      opacity: 0.9;
       pointer-events: none;
     }
 
     .overlay-inner {
       position: relative;
       z-index: 1;
+      text-align: center;
     }
 
     .overlay-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 5px 12px;
+      padding: 4px 11px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      border: 1px solid rgba(248,250,252,0.16);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(248, 250, 252, 0.12);
-      margin-bottom: 1rem;
       color: #e5e7eb;
+      background: rgba(15,23,42,0.9);
+      margin-bottom: 0.9rem;
     }
 
     .overlay-badge span {
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 12px rgba(239, 68, 68, 0.9);
+      background: #22c55e;
+      box-shadow: 0 0 12px rgba(34,197,94,0.85);
     }
 
     .overlay-title {
-      font-size: clamp(2.2rem, 5vw, 2.8rem);
-      margin-bottom: 0.5rem;
+      font-size: clamp(2.1rem, 4vw, 2.7rem);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: #fef2f2;
+      margin-bottom: 0.3rem;
     }
 
     .overlay-name {
-      font-size: clamp(1.9rem, 4.5vw, 2.2rem);
+      font-size: clamp(1.9rem, 3.6vw, 2.2rem);
       font-weight: 700;
-      margin-bottom: 1.3rem;
+      margin-bottom: 1rem;
       background: linear-gradient(120deg, #fee2e2, #fecaca, #f97373);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
-    .overlay-subtitle {
-      font-size: 0.95rem;
+    .overlay-text {
+      font-size: 0.93rem;
       color: var(--muted);
-      margin-bottom: 1.8rem;
+      max-width: 360px;
+      margin: 0 auto 1.5rem;
     }
 
     .overlay-actions {
       display: flex;
-      gap: 12px;
-      justify-content: center;
       flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       padding: 0.8rem 1.5rem;
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -161,45 +162,45 @@
     .btn-primary {
       background: linear-gradient(135deg, #ef4444, #f97316);
       color: #fff;
-      box-shadow: 0 12px 25px rgba(248, 113, 113, 0.5);
+      box-shadow: 0 14px 32px rgba(248,113,113,0.55);
     }
 
     .btn-primary:hover {
       transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 18px 40px rgba(248, 113, 113, 0.7);
-    }
-
-    /* Spiel-Button im Startmenü extra auffällig */
-    .btn-game {
-      background: radial-gradient(circle at top left, #22c55e, #16a34a);
-      color: #f9fafb;
-      box-shadow: 0 12px 28px rgba(34, 197, 94, 0.65);
-    }
-
-    .btn-game:hover {
-      transform: translateY(-1px) scale(1.03);
-      box-shadow: 0 18px 40px rgba(34, 197, 94, 0.8);
+      box-shadow: 0 18px 42px rgba(248,113,113,0.75);
     }
 
     .btn-ghost {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15,23,42,0.88);
+      border: 1px solid rgba(148,163,184,0.7);
       color: #e5e7eb;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.6);
+      box-shadow: 0 12px 28px rgba(15,23,42,0.7);
     }
 
     .btn-ghost:hover {
       transform: translateY(-1px);
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15,23,42,0.98);
     }
 
-    /* App Layout */
+    .btn-game {
+      background: radial-gradient(circle at top left, #22c55e, #16a34a);
+      color: #f9fafb;
+      box-shadow: 0 16px 36px rgba(34,197,94,0.75);
+    }
+
+    .btn-game:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 20px 52px rgba(34,197,94,0.9);
+    }
+
+    /* ---------- APP ---------- */
+
     .app {
       width: 100%;
       max-width: 1120px;
       margin: auto;
       opacity: 0;
-      transform: translateY(12px);
+      transform: translateY(14px);
       transition: opacity var(--transition-slow), transform var(--transition-slow);
       visibility: hidden;
     }
@@ -216,39 +217,39 @@
     }
 
     header h1 {
-      font-size: clamp(1.9rem, 3.5vw, 2.4rem);
-      margin-bottom: 0.4rem;
+      font-size: clamp(2rem, 3.5vw, 2.5rem);
+      margin-bottom: 6px;
     }
 
     header p {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: var(--muted);
     }
 
     .tabs {
       display: inline-flex;
       padding: 4px;
-      background: rgba(15, 23, 42, 0.85);
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      margin: 18px auto 24px;
-      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.7);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.5);
+      margin-top: 16px;
+      box-shadow: 0 16px 34px rgba(15,23,42,0.8);
     }
 
     .tab-btn {
       border: none;
-      padding: 0.5rem 1.4rem;
+      padding: 0.5rem 1.5rem;
       border-radius: 999px;
       background: transparent;
       color: #e5e7eb;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: background var(--transition-fast), color var(--transition-fast),
+      transition: background var(--transition-fast),
+        color var(--transition-fast),
         transform var(--transition-fast);
     }
 
     .tab-btn[data-tab="game"] {
-      /* kleine Farbe schon im Tab, damit „Spiel spielen“ besser auffällt */
       color: #f97316;
     }
 
@@ -263,17 +264,18 @@
       color: #e5e7eb;
       opacity: 0.9;
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    /* Wunschkarten */
+    /* ---------- SECTION-SWITCH ---------- */
     .section {
       display: none;
     }
-
     .section.active {
       display: block;
     }
+
+    /* ---------- WUNSCHKARTEN ---------- */
 
     .wishes-grid {
       display: grid;
@@ -282,9 +284,19 @@
     }
 
     .card {
-      background: transparent;
       perspective: 1100px;
-      cursor: pointer;
+      animation: cardIn 0.6s ease backwards;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .card-inner {
@@ -292,14 +304,16 @@
       width: 100%;
       height: 180px;
       border-radius: var(--radius-xl);
-      transition: transform var(--transition-slow), box-shadow var(--transition-fast);
       transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow var(--transition-fast), transform-origin 0.3s ease;
       box-shadow: var(--shadow-soft);
+      cursor: pointer;
     }
 
     .card:hover .card-inner {
-      transform: translateY(-2px);
-      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.55);
+      transform: translateY(-3px) rotateX(2deg) rotateY(-2deg);
+      box-shadow: 0 22px 44px rgba(0, 0, 0, 0.6);
     }
 
     .card.flipped .card-inner {
@@ -319,54 +333,105 @@
     }
 
     .card-front {
-      background: radial-gradient(circle at top left, rgba(220, 38, 38, 0.8), #020617);
-      border: 1px solid rgba(248, 250, 252, 0.08);
+      background: radial-gradient(circle at top left, rgba(248,113,113,0.9), #020617);
+      border: 1px solid rgba(248,250,252,0.12);
+      position: relative;
+      overflow: hidden;
     }
 
-    .card-back {
-      background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.85), #020617);
-      border: 1px solid rgba(191, 219, 254, 0.6);
-      transform: rotateY(180deg);
+    .card-front::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(248,250,252,0.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(248,250,252,0.09), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .card-front-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-icon-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #fee2e2, #b91c1c);
+      box-shadow: 0 14px 30px rgba(248,113,113,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+      animation: pulseGift 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulseGift {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 12px 26px rgba(248,113,113,0.7);
+      }
+      50% {
+        transform: scale(1.06);
+        box-shadow: 0 18px 40px rgba(248,113,113,1);
+      }
+    }
+
+    .card-icon-circle span {
+      font-size: 1.6rem;
+    }
+
+    .card-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #fee2e2;
+      opacity: 0.9;
     }
 
     .card-title {
       font-size: 1.1rem;
       font-weight: 700;
       text-align: center;
-      margin-bottom: 0.35rem;
+      color: #fdf2f2;
     }
 
     .card-tag {
       font-size: 0.85rem;
       color: #e5e7eb;
       opacity: 0.9;
-      margin-bottom: 0.3rem;
     }
 
-    .card-text {
-      font-size: 0.86rem;
-      text-align: center;
-      color: #fef2f2;
-    }
-
-    .card-label {
+    .card-front-hint {
       font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #fee2e2;
-      margin-bottom: 0.6rem;
-      opacity: 0.9;
+      color: #fecaca;
+      opacity: 0.96;
+      margin-top: 2px;
     }
 
-    /* Spielbereich */
+    .card-back {
+      background: radial-gradient(circle at top right, rgba(59,130,246,0.95), #020617);
+      border: 1px solid rgba(191,219,254,0.7);
+      transform: rotateY(180deg);
+    }
+
+    /* ---------- GAME SECTION ---------- */
+
     .game-wrapper {
       margin: 0 auto;
       max-width: 960px;
       background: radial-gradient(circle at top, #111827, #020617);
       border-radius: 26px;
-      padding: 18px 18px 22px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      padding: 18px 18px 20px;
+      border: 1px solid rgba(148,163,184,0.45);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.8);
     }
 
     .game-header {
@@ -374,41 +439,44 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
       gap: 10px;
+      margin-bottom: 10px;
     }
 
     .game-title {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .game-stats {
       display: flex;
-      gap: 18px;
+      gap: 10px;
       font-size: 0.9rem;
     }
 
     .badge {
       padding: 4px 10px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.7);
     }
 
     .game-controls {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       align-items: center;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 8px;
       font-size: 0.8rem;
       color: var(--muted);
     }
 
     .game-controls .btn {
-      font-size: 0.85rem;
-      padding: 0.5rem 1.1rem;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.82rem;
     }
 
     canvas {
@@ -417,33 +485,149 @@
       height: auto;
       border-radius: 18px;
       background: linear-gradient(to top, #020617 30%, #0b1120 100%);
-      border: 1px solid rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(15,23,42,0.9);
       display: block;
       margin: 0 auto;
     }
 
     .game-message {
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       margin-top: 8px;
       color: #e5e7eb;
+    }
+
+    /* ---------- MINI GAME 2: WUNSCHFINDER ---------- */
+
+    .mini-games-tabs {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(148,163,184,0.6);
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+    }
+
+    .mini-tab-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 4px 12px;
+      background: transparent;
+      color: #e5e7eb;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .mini-tab-btn.active {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      color: #fff;
+    }
+
+    .mini-game {
+      display: none;
+      margin-top: 6px;
+    }
+
+    .mini-game.active {
+      display: block;
+    }
+
+    .wish-spinner {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.6);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .spinner-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .spinner-result {
+      font-size: 0.95rem;
+      margin-top: 6px;
+      color: #fefce8;
+    }
+
+    /* ---------- GAME OVER OVERLAY ---------- */
+
+    .gameover-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(15,23,42,0.96));
+      z-index: 25;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity var(--transition-slow), visibility var(--transition-fast);
+    }
+
+    .gameover-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .gameover-box {
+      width: min(420px, 100%);
+      padding: 26px 24px 20px;
+      border-radius: 22px;
+      background: radial-gradient(circle at 0 0, #111827, #020617 70%);
+      border: 1px solid rgba(248,250,252,0.1);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.9);
+      text-align: center;
+    }
+
+    .gameover-title {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .gameover-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .gameover-score {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .gameover-best {
+      font-size: 0.9rem;
+      color: #e5e7eb;
+      margin-bottom: 14px;
+    }
+
+    .gameover-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
     }
 
     @media (max-width: 700px) {
       body {
         padding: 12px;
       }
-
       .game-header {
         flex-direction: column;
         align-items: flex-start;
       }
-
       .game-stats {
         width: 100%;
         justify-content: flex-start;
       }
-
       .card-inner {
         height: 170px;
       }
@@ -451,33 +635,42 @@
   </style>
 </head>
 <body>
-  <!-- Start-Overlay -->
+  <!-- START OVERLAY -->
   <div class="overlay" id="overlay">
-    <div class="overlay-content">
+    <div class="overlay-box">
       <div class="overlay-inner">
         <div class="overlay-badge">
-          <span></span>
-          Weihnachts-Spezial
+          <span></span> WEIHNACHTS SPECIAL
         </div>
         <div class="overlay-title">Weihnachtswünsche</div>
         <div class="overlay-name">2025 · Florian</div>
-        <p class="overlay-subtitle">
-          Entdecke deine Wunschkarten <strong>oder</strong> spiele einen kleinen
-          Weihnachts-Endless-Runner: Geschenke sammeln, Hindernissen ausweichen.
+        <p class="overlay-text">
+          Hinter jeder Karte versteckt sich ein Wunsch. Du kannst erst alle Wünsche aufdecken –
+          oder direkt in das kleine Weihnachts-Spiel springen.
         </p>
         <div class="overlay-actions">
-          <button class="btn btn-ghost" id="startWishlist">
-            Wunschkarten ansehen
-          </button>
-          <button class="btn btn-game" id="startGameDirect">
-            🎮 Spiel spielen
-          </button>
+          <button class="btn btn-ghost" id="startWishlist">Wunschkarten ansehen</button>
+          <button class="btn btn-game" id="startGameDirect">🎮 Spiel spielen</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- App -->
+  <!-- GAME OVER OVERLAY -->
+  <div class="gameover-overlay" id="gameOverOverlay">
+    <div class="gameover-box">
+      <div class="gameover-title">Game Over 🎄</div>
+      <div class="gameover-sub">Du bist an einem Hindernis hängen geblieben.</div>
+      <div class="gameover-score" id="gameOverScore"></div>
+      <div class="gameover-best" id="gameOverBest"></div>
+      <div class="gameover-actions">
+        <button class="btn btn-primary" id="gameOverRestart">Nochmal spielen</button>
+        <button class="btn btn-ghost" id="gameOverClose">Zurück zur Wunschliste</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP -->
   <main class="app" id="app">
     <header>
       <h1>Florians Weihnachtswunschliste 2025</h1>
@@ -489,131 +682,124 @@
     </header>
 
     <p class="hint" id="hintText">
-      Tipp: Tippe auf eine Karte, um die Rückseite mit der Beschreibung zu sehen.
+      Tipp: Tippe auf eine Karte, um den Wunsch aufzudecken.
     </p>
 
-    <!-- Wunschliste -->
+    <!-- WUNSCHLISTE -->
     <section class="section active" id="wishesSection">
       <div class="wishes-grid" id="wishesGrid"></div>
     </section>
 
-    <!-- Spiel -->
+    <!-- SPIEL -->
     <section class="section" id="gameSection">
       <div class="game-wrapper">
         <div class="game-header">
-          <div class="game-title">🎅 Geschenk-Jagd – Endless Runner</div>
+          <div class="game-title">
+            🎅 Geschenk-Jagd – Endless Runner
+          </div>
           <div class="game-stats">
             <div class="badge" id="scoreBadge">Score: 0</div>
             <div class="badge" id="bestBadge">Best: 0</div>
           </div>
         </div>
-        <div class="game-controls">
-          <span>
-            Steuerung: <strong>Leertaste</strong> oder <strong>Pfeil ↑</strong>,
-            auf dem Handy einfach aufs Spielfeld tippen.
-          </span>
-          <button class="btn btn-primary" id="gameStartButton">Spiel starten</button>
+
+        <!-- Mini-Game Tabs -->
+        <div class="mini-games-tabs">
+          <button class="mini-tab-btn active" data-game="runner">Runner</button>
+          <button class="mini-tab-btn" data-game="spinner">Wunschrad</button>
         </div>
-        <canvas id="gameCanvas" width="900" height="260"></canvas>
-        <p class="game-message" id="gameMessage">
-          Sammle Geschenke, weiche Hindernissen aus – je länger du überlebst, desto schneller wird alles.
-        </p>
+
+        <!-- RUNNER GAME -->
+        <div class="mini-game active" id="runnerGame">
+          <div class="game-controls">
+            <span>
+              Steuerung: <strong>Leertaste</strong> oder <strong>Pfeil ↑</strong>, auf dem Handy tippen.
+            </span>
+            <button class="btn btn-primary" id="gameStartButton">Spiel starten</button>
+          </div>
+          <canvas id="gameCanvas" width="900" height="260"></canvas>
+          <p class="game-message" id="gameMessage">
+            Sammle Geschenke, springe über Hindernisse. Berührst du sie, ist die Runde vorbei.
+          </p>
+        </div>
+
+        <!-- MINI GAME 2: WUNSCHRAD -->
+        <div class="mini-game" id="spinnerGame">
+          <div class="wish-spinner">
+            <div class="spinner-title">🎁 Zufälliger Wunsch</div>
+            <p>Drücke auf den Button und das Weihnachtsrad sucht dir zufällig einen Wunsch aus.</p>
+            <button class="btn btn-primary" id="spinButton" style="margin-top:10px;">Wunsch drehen</button>
+            <div class="spinner-result" id="spinnerResult">Noch kein Wunsch gedreht.</div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <script>
-    // -------------------------
-    // Wunschkarten
-    // -------------------------
+    // ==========================
+    // Daten für Wünsche
+    // ==========================
     const wishes = [
-      {
-        title: "Edelstahlpfanne",
-        tag: "Küche",
-        text: "Hochwertige Edelstahlpfanne für scharfes Anbraten und langlebiges Kochen."
-      },
-      {
-        title: "Badteppich",
-        tag: "Bad",
-        text: "Kuscheliger, rutschfester Badteppich für warme Füße nach dem Duschen."
-      },
-      {
-        title: "Erste-Hilfe-Set für die Wohnung",
-        tag: "Sicherheit",
-        text: "Kompaktes, vollständiges Erste-Hilfe-Set – für kleine Notfälle im Alltag."
-      },
-      {
-        title: "Bohrmaschine",
-        tag: "Werkzeug",
-        text: "Zuverlässige Bohrmaschine für Bilder, Regale und alle Projekte in der Wohnung."
-      },
-      {
-        title: "Badezimmer-Mülleimer",
-        tag: "Bad",
-        text: "Schlichter, moderner Mülleimer fürs Bad – idealerweise mit Deckel."
-      },
-      {
-        title: "Küchenschere",
-        tag: "Küche",
-        text: "Robuste, scharfe Küchenschere, perfekt zum Kochen und Verpackungen öffnen."
-      },
-      {
-        title: "Zester (Reibe)",
-        tag: "Küche",
-        text: "Feine Reibe/Zester für Zitronenabrieb, Knoblauch, Ingwer oder Parmesan."
-      },
-      {
-        title: "Gewürzmühle",
-        tag: "Küche",
-        text: "Hochwertige Mühle für frische Pfeffer- oder Salzgewürze beim Kochen."
-      },
-      {
-        title: "Elegoo UNO R3 Ultimate Starterkit",
-        tag: "Elektronik",
-        text: "Umfangreiches Arduino-kompatibles Kit für Elektronik- und Programmierprojekte."
-      },
-      {
-        title: "Lego Bonsai Baum",
-        tag: "Lego",
-        text: "Deko-Set zum Bauen und Entspannen – perfekt für Schreibtisch oder Wohnzimmer."
-      }
+      { title: "Edelstahlpfanne", tag: "Küche" },
+      { title: "Badteppich", tag: "Bad" },
+      { title: "Erste-Hilfe-Set für die Wohnung", tag: "Sicherheit" },
+      { title: "Bohrmaschine", tag: "Werkzeug" },
+      { title: "Badezimmer-Mülleimer", tag: "Bad" },
+      { title: "Küchenschere", tag: "Küche" },
+      { title: "Zester (Reibe)", tag: "Küche" },
+      { title: "Gewürzmühle", tag: "Küche" },
+      { title: "Elegoo UNO R3 Ultimate Starterkit", tag: "Elektronik" },
+      { title: "Lego Bonsai Baum", tag: "Lego" }
     ];
 
+    // ==========================
+    // Wunschkarten erzeugen
+    // ==========================
     const wishesGrid = document.getElementById("wishesGrid");
 
     wishes.forEach((wish, index) => {
-      const article = document.createElement("article");
-      article.className = "card";
+      const card = document.createElement("article");
+      card.className = "card";
 
-      article.innerHTML = `
+      card.innerHTML = `
         <div class="card-inner">
           <div class="card-face card-front">
-            <div class="card-title">${wish.title}</div>
-            <div class="card-tag">${wish.tag}</div>
+            <div class="card-front-inner">
+              <div class="card-icon-circle">
+                <span>🎁</span>
+              </div>
+              <div class="card-label">Wunschkarte</div>
+              <div class="card-title">Karte #${index + 1}</div>
+              <div class="card-front-hint">Tippe, um den Wunsch zu sehen</div>
+            </div>
           </div>
           <div class="card-face card-back">
             <div class="card-label">Wunsch #${index + 1}</div>
             <div class="card-title">${wish.title}</div>
             <div class="card-tag">${wish.tag}</div>
-            <p class="card-text">${wish.text}</p>
           </div>
         </div>
       `;
 
-      article.addEventListener("click", () => {
-        article.classList.toggle("flipped");
+      card.addEventListener("click", () => {
+        card.classList.toggle("flipped");
       });
 
-      wishesGrid.appendChild(article);
+      wishesGrid.appendChild(card);
     });
 
-    // -------------------------
+    // ==========================
     // Overlay & Tabs
-    // -------------------------
+    // ==========================
     const overlay = document.getElementById("overlay");
     const app = document.getElementById("app");
     const startWishlistBtn = document.getElementById("startWishlist");
     const startGameDirectBtn = document.getElementById("startGameDirect");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const wishesSection = document.getElementById("wishesSection");
+    const gameSection = document.getElementById("gameSection");
+    const hintText = document.getElementById("hintText");
 
     function showAppAndTab(tab) {
       overlay.classList.add("hidden");
@@ -627,37 +813,67 @@
       startGame();
     });
 
-    const tabButtons = document.querySelectorAll(".tab-btn");
-    const wishesSection = document.getElementById("wishesSection");
-    const gameSection = document.getElementById("gameSection");
-    const hintText = document.getElementById("hintText");
-
     function setActiveTab(tab) {
       tabButtons.forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.tab === tab);
       });
+
       if (tab === "wishes") {
         wishesSection.classList.add("active");
         gameSection.classList.remove("active");
         hintText.textContent =
-          "Tipp: Tippe auf eine Karte, um die Rückseite mit der Beschreibung zu sehen.";
+          "Tipp: Tippe auf eine Karte, um den Wunsch aufzudecken.";
       } else {
         wishesSection.classList.remove("active");
         gameSection.classList.add("active");
         hintText.textContent =
-          "Tipp: Spring über Hindernisse und sammle Geschenke. Kollision = Game Over!";
+          "Tipp: Spiele den Runner oder drehe am Wunschrad.";
       }
     }
 
     tabButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        setActiveTab(btn.dataset.tab);
-      });
+      btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
     });
 
-    // -------------------------
-    // Endless Runner mit Hindernissen
-    // -------------------------
+    // ==========================
+    // Mini-Game Tabs
+    // ==========================
+    const miniTabButtons = document.querySelectorAll(".mini-tab-btn");
+    const runnerGameEl = document.getElementById("runnerGame");
+    const spinnerGameEl = document.getElementById("spinnerGame");
+
+    function setActiveGame(game) {
+      miniTabButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.game === game));
+      runnerGameEl.classList.toggle("active", game === "runner");
+      spinnerGameEl.classList.toggle("active", game === "spinner");
+    }
+
+    miniTabButtons.forEach(btn => {
+      btn.addEventListener("click", () => setActiveGame(btn.dataset.game));
+    });
+
+    // ==========================
+    // Game Over Overlay
+    // ==========================
+    const gameOverOverlay = document.getElementById("gameOverOverlay");
+    const gameOverScore = document.getElementById("gameOverScore");
+    const gameOverBest = document.getElementById("gameOverBest");
+    const gameOverRestart = document.getElementById("gameOverRestart");
+    const gameOverClose = document.getElementById("gameOverClose");
+
+    function showGameOverOverlay(score, best) {
+      gameOverScore.textContent = `Dein Score: ${score}`;
+      gameOverBest.textContent = `Bester Score: ${best}`;
+      gameOverOverlay.classList.add("visible");
+    }
+
+    function hideGameOverOverlay() {
+      gameOverOverlay.classList.remove("visible");
+    }
+
+    // ==========================
+    // Endless Runner Game
+    // ==========================
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
     const scoreBadge = document.getElementById("scoreBadge");
@@ -697,105 +913,49 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Sterne
-      ctx.fillStyle = "rgba(248,250,252,0.7)";
+      ctx.fillStyle = "rgba(248,250,252,0.75)";
       for (let i = 0; i < 40; i++) {
         const x = (i * 47 + (Date.now() / 30)) % canvas.width;
         const y = (i * 23) % (canvas.height / 2);
         ctx.fillRect(x, y, 2, 2);
       }
 
-      // Boden
       ctx.fillStyle = "#111827";
       ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
 
-      // Schneehügel
       ctx.fillStyle = "#e5e7eb";
       ctx.beginPath();
-      ctx.ellipse(
-        canvas.width * 0.2,
-        groundY + 20,
-        80,
-        22,
-        0,
-        0,
-        Math.PI * 2
-      );
-      ctx.ellipse(
-        canvas.width * 0.7,
-        groundY + 24,
-        110,
-        28,
-        0,
-        0,
-        Math.PI * 2
-      );
+      ctx.ellipse(canvas.width * 0.2, groundY + 20, 80, 22, 0, 0, Math.PI * 2);
+      ctx.ellipse(canvas.width * 0.7, groundY + 24, 110, 28, 0, 0, Math.PI * 2);
       ctx.fill();
     }
 
     function drawPlayer() {
       ctx.fillStyle = "#e11d48";
       ctx.fillRect(player.x, player.y, player.width, player.height);
-
       ctx.fillStyle = "#f9fafb";
       ctx.fillRect(player.x + 4, player.y - 10, player.width - 8, 8);
       ctx.beginPath();
       ctx.arc(player.x + player.width / 2, player.y - 13, 5, 0, Math.PI * 2);
       ctx.fill();
-
       ctx.fillStyle = "#020617";
       ctx.fillRect(player.x, player.y + player.height / 2, player.width, 5);
       ctx.fillStyle = "#facc15";
       ctx.fillRect(player.x + player.width / 2 - 5, player.y + player.height / 2, 10, 5);
     }
 
-    function drawGifts() {
-      for (const g of gifts) {
-        ctx.fillStyle = g.color;
-        ctx.fillRect(g.x, g.y, g.size, g.size);
-        ctx.strokeStyle = "#f9fafb";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(g.x + g.size / 2, g.y);
-        ctx.lineTo(g.x + g.size / 2, g.y + g.size);
-        ctx.moveTo(g.x, g.y + g.size / 2);
-        ctx.lineTo(g.x + g.size, g.y + g.size / 2);
-        ctx.stroke();
-      }
-    }
-
-    function drawObstacles() {
-      for (const o of obstacles) {
-        // Einfacher Schneehaufen / Block
-        ctx.fillStyle = o.color;
-        ctx.fillRect(o.x, o.y, o.width, o.height);
-        ctx.fillStyle = "#e5e7eb";
-        ctx.beginPath();
-        ctx.ellipse(
-          o.x + o.width / 2,
-          o.y + 4,
-          o.width / 2,
-          o.height / 3,
-          0,
-          0,
-          Math.PI * 2
-        );
-        ctx.fill();
-      }
-    }
-
     function spawnGift() {
       const size = 26;
       gifts.push({
         x: canvas.width + 40,
-        y: groundY - size - 4 - Math.random() * 20,
+        y: groundY - size - 6 - Math.random() * 18,
         size,
         color: Math.random() > 0.5 ? "#22c55e" : "#3b82f6"
       });
     }
 
     function spawnObstacle() {
-      const width = 26 + Math.random() * 14;
+      const width = 26 + Math.random() * 16;
       const height = 30 + Math.random() * 20;
       obstacles.push({
         x: canvas.width + 60,
@@ -815,8 +975,41 @@
       );
     }
 
-    function update(dt) {
-      // Physik – geringere Sprunghöhe
+    function drawGifts() {
+      for (const g of gifts) {
+        ctx.fillStyle = g.color;
+        ctx.fillRect(g.x, g.y, g.size, g.size);
+        ctx.strokeStyle = "#f9fafb";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(g.x + g.size / 2, g.y);
+        ctx.lineTo(g.x + g.size / 2, g.y + g.size);
+        ctx.moveTo(g.x, g.y + g.size / 2);
+        ctx.lineTo(g.x + g.size, g.y + g.size / 2);
+        ctx.stroke();
+      }
+    }
+
+    function drawObstacles() {
+      for (const o of obstacles) {
+        ctx.fillStyle = o.color;
+        ctx.fillRect(o.x, o.y, o.width, o.height);
+        ctx.fillStyle = "#e5e7eb";
+        ctx.beginPath();
+        ctx.ellipse(
+          o.x + o.width / 2,
+          o.y + 4,
+          o.width / 2,
+          o.height / 3,
+          0,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+      }
+    }
+
+    function updateRunner(dt) {
       const gravity = 55;
       player.vy += gravity * dt;
       player.y += player.vy;
@@ -827,7 +1020,6 @@
         player.onGround = true;
       }
 
-      // Gifts spawnen
       giftTimer += dt;
       const giftInterval = Math.max(0.7, 1.4 - score * 0.03);
       if (giftTimer > giftInterval) {
@@ -835,7 +1027,6 @@
         giftTimer = 0;
       }
 
-      // Hindernisse spawnen
       obstacleTimer += dt;
       const obstacleInterval = Math.max(0.9, 2.3 - score * 0.05);
       if (obstacleTimer > obstacleInterval) {
@@ -843,17 +1034,10 @@
         obstacleTimer = 0;
       }
 
-      // Bewegung
       const worldSpeed = speed * 60 * dt;
+      for (const g of gifts) g.x -= worldSpeed;
+      for (const o of obstacles) o.x -= worldSpeed;
 
-      for (const g of gifts) {
-        g.x -= worldSpeed;
-      }
-      for (const o of obstacles) {
-        o.x -= worldSpeed;
-      }
-
-      // Kollisionsprüfung Geschenke + entfernen
       for (let i = gifts.length - 1; i >= 0; i--) {
         const g = gifts[i];
         if (
@@ -878,11 +1062,9 @@
         }
       }
 
-      // Kollisionsprüfung Hindernisse
       for (let i = obstacles.length - 1; i >= 0; i--) {
         const o = obstacles[i];
         if (rectsOverlap(player, o)) {
-          // Game Over
           stopGame(true);
           return;
         }
@@ -901,7 +1083,7 @@
       drawPlayer();
       drawGifts();
       drawObstacles();
-      update(dt);
+      updateRunner(dt);
 
       requestAnimationFrame(gameLoop);
     }
@@ -909,52 +1091,40 @@
     function jump() {
       if (!running) return;
       if (player.onGround) {
-        player.vy = -15; // deutlich flacherer Sprung
+        player.vy = -15; // Sprunghöhe
         player.onGround = false;
       }
     }
 
     function startGame() {
       if (running) return;
+      setActiveGame("runner");
+      hideGameOverOverlay();
       resetGameState();
       running = true;
       lastTime = performance.now();
       gameStartButton.textContent = "Läuft...";
       gameMessage.textContent =
-        "Sammle Geschenke, spring über Hindernisse – mal sehen, wie hoch dein Score wird!";
-      drawBackground();
-      drawPlayer();
+        "Sammle Geschenke, spring über Hindernisse – viel Erfolg!";
       requestAnimationFrame(gameLoop);
     }
 
     function stopGame(byObstacle = false) {
+      if (!running) return;
       running = false;
       gameStartButton.textContent = "Nochmal spielen";
       if (byObstacle) {
         gameMessage.textContent =
-          "Game Over – du bist gegen ein Hindernis gelaufen. Score: " +
-          score +
-          ". Klicke auf „Nochmal spielen“ für eine neue Runde.";
+          "Du bist an einem Hindernis hängen geblieben. Drücke „Nochmal spielen“ für eine neue Runde.";
+        showGameOverOverlay(score, bestScore);
       } else {
         gameMessage.textContent =
-          "Runde beendet. Score: " +
-          score +
-          ". Klicke auf „Nochmal spielen“, um erneut zu starten.";
+          "Runde beendet. Drücke „Nochmal spielen“, um es erneut zu versuchen.";
       }
     }
 
-    // Bestscore laden
-    bestScore = parseInt(localStorage.getItem("xmasBestScore") || "0", 10);
-    bestBadge.textContent = "Best: " + bestScore;
-    resetGameState();
-    drawBackground();
-    drawPlayer();
-
-    // Events
     gameStartButton.addEventListener("click", () => {
-      if (!running) {
-        startGame();
-      }
+      if (!running) startGame();
     });
 
     window.addEventListener("keydown", (e) => {
@@ -963,7 +1133,7 @@
         if (!running) startGame();
         else jump();
       } else if (e.code === "Escape") {
-        if (running) stopGame(false);
+        stopGame(false);
       }
     });
 
@@ -976,6 +1146,49 @@
       if (document.hidden && running) {
         stopGame(false);
       }
+    });
+
+    bestScore = parseInt(localStorage.getItem("xmasBestScore") || "0", 10);
+    bestBadge.textContent = "Best: " + bestScore;
+    resetGameState();
+    drawBackground();
+    drawPlayer();
+
+    // Game Over Overlay Buttons
+    gameOverRestart.addEventListener("click", () => {
+      hideGameOverOverlay();
+      startGame();
+    });
+
+    gameOverClose.addEventListener("click", () => {
+      hideGameOverOverlay();
+      setActiveTab("wishes");
+      stopGame(false);
+    });
+
+    // ==========================
+    // Mini Game 2: Wunschrad
+    // ==========================
+    const spinButton = document.getElementById("spinButton");
+    const spinnerResult = document.getElementById("spinnerResult");
+    let spinning = false;
+
+    spinButton.addEventListener("click", () => {
+      if (spinning) return;
+      spinning = true;
+      spinnerResult.textContent = "Das Rad dreht sich...";
+      let ticks = 0;
+      const maxTicks = 18 + Math.floor(Math.random() * 10);
+      const interval = setInterval(() => {
+        const w = wishes[Math.floor(Math.random() * wishes.length)];
+        spinnerResult.textContent = `Vielleicht dieses Jahr: ${w.title} (${w.tag})`;
+        ticks++;
+        if (ticks >= maxTicks) {
+          clearInterval(interval);
+          spinnerResult.textContent = `Ausgewählter Wunsch: ${w.title} (${w.tag})`;
+          spinning = false;
+        }
+      }, 90);
     });
   </script>
 </body>
