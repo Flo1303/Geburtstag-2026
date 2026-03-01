@@ -8,11 +8,8 @@
   <style>
     :root{
       --bg0:#020617;
-      --bg1:#0b1222;
       --card:#0f172a;
-      --card2:#111827;
-      --stroke:rgba(148,163,184,.25);
-      --stroke2:rgba(248,250,252,.10);
+      --stroke:rgba(148,163,184,.28);
       --text:#f8fafc;
       --muted:#9ca3af;
 
@@ -21,11 +18,7 @@
       --accent3:#22c55e;
 
       --radius-xl:22px;
-      --radius-lg:18px;
-
       --shadow:0 18px 44px rgba(0,0,0,.55);
-      --shadow2:0 12px 26px rgba(0,0,0,.42);
-
       --t-fast:.22s ease;
       --t-slow:.55s cubic-bezier(.22,.61,.36,1);
     }
@@ -42,24 +35,10 @@
         radial-gradient(circle at 50% 0%, rgba(34,197,94,.15), transparent 46%),
         radial-gradient(circle at top, #1f2937 0, #020617 62%, #000 100%);
       min-height:100vh;
-      padding:18px;
+      padding:16px;
       display:flex;
       justify-content:center;
       align-items:stretch;
-    }
-
-    /* subtle grain */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 0 0, rgba(248,250,252,.06), transparent 45%),
-        radial-gradient(circle at 100% 100%, rgba(248,250,252,.04), transparent 45%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-      opacity:.35;
     }
 
     .wrap{
@@ -168,7 +147,7 @@
       letter-spacing:.09em;
       text-transform:uppercase;
       font-size:.84rem;
-      transition: transform var(--t-fast), box-shadow var(--t-fast), opacity var(--t-fast), background var(--t-fast);
+      transition: transform var(--t-fast), box-shadow var(--t-fast), opacity var(--t-fast);
       -webkit-tap-highlight-color:transparent;
       display:inline-flex;
       align-items:center;
@@ -205,36 +184,34 @@
 
     header{
       text-align:center;
-      margin-bottom:14px;
+      margin-bottom:12px;
     }
     header h1{
-      font-size: clamp(1.9rem, 3.2vw, 2.5rem);
-      margin-bottom:5px;
+      font-size: clamp(2.0rem, 3.2vw, 2.6rem);
+      margin-bottom:6px;
+      line-height:1.05;
     }
     header p{
       color:var(--muted);
-      font-size:.92rem;
+      font-size:1rem;
       line-height:1.35;
     }
 
     .topbar{
       margin-top:12px;
       display:flex;
-      gap:10px;
       justify-content:center;
-      flex-wrap:wrap;
     }
-
     .pill{
       display:inline-flex;
       align-items:center;
-      gap:8px;
-      padding:7px 12px;
+      gap:10px;
+      padding:9px 14px;
       border-radius:999px;
       background:rgba(15,23,42,.78);
       border:1px solid rgba(148,163,184,.35);
       color:#e5e7eb;
-      font-size:.82rem;
+      font-size:.95rem;
       box-shadow:0 14px 36px rgba(0,0,0,.42);
     }
     .pill strong{ color:#fff; }
@@ -242,14 +219,17 @@
     /* ---------- GRID CARDS ---------- */
     .grid{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap:16px;
       margin:14px 0 18px;
     }
 
     .card{
-      perspective:1100px;
+      perspective:1200px;
+      -webkit-perspective:1200px;
       outline:none;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
 
     .card-inner{
@@ -257,24 +237,35 @@
       height:170px;
       border-radius:var(--radius-xl);
       transform-style:preserve-3d;
+      -webkit-transform-style:preserve-3d;
       transition: transform .62s cubic-bezier(.2,.8,.2,1), box-shadow var(--t-fast);
       box-shadow: var(--shadow);
       cursor:pointer;
+
+      /* iOS/Safari Stabilität */
+      will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
 
     .card:focus-visible .card-inner{
       box-shadow: 0 0 0 3px rgba(248,113,113,.55), var(--shadow);
     }
 
-    .card.flipped .card-inner{ transform: rotateY(180deg); }
+    .card.flipped .card-inner{
+      transform: rotateY(180deg) translateZ(0);
+      -webkit-transform: rotateY(180deg) translateZ(0);
+    }
 
     @media (hover:hover) and (pointer:fine){
       .card:hover .card-inner{
-        transform: translateY(-3px) rotateX(2deg) rotateY(-2deg);
+        transform: translateY(-3px) rotateX(2deg) rotateY(-2deg) translateZ(0);
+        -webkit-transform: translateY(-3px) rotateX(2deg) rotateY(-2deg) translateZ(0);
         box-shadow: 0 24px 58px rgba(0,0,0,.68);
       }
       .card.flipped:hover .card-inner{
-        transform: rotateY(180deg) translateY(-3px) rotateX(2deg) rotateY(2deg);
+        transform: rotateY(180deg) translateY(-3px) rotateX(2deg) rotateY(2deg) translateZ(0);
+        -webkit-transform: rotateY(180deg) translateY(-3px) rotateX(2deg) rotateY(2deg) translateZ(0);
       }
     }
 
@@ -287,8 +278,14 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
+
       backface-visibility:hidden;
       -webkit-backface-visibility:hidden;
+
+      /* iOS Fix: verhindert Spiegel/„durchscheinen“ */
+      transform: translateZ(1px);
+      -webkit-transform: translateZ(1px);
+
       overflow:hidden;
       text-align:center;
     }
@@ -315,60 +312,56 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:7px;
+      gap:10px;
     }
 
     .icon{
-      width:52px;height:52px;
+      width:56px;height:56px;
       border-radius:999px;
       background: radial-gradient(circle at 30% 0, #fee2e2, #b91c1c);
       display:flex;
       align-items:center;
       justify-content:center;
       box-shadow: 0 14px 32px rgba(248,113,113,.82);
-      animation: pulse 2.35s ease-in-out infinite;
     }
-    @keyframes pulse{
-      0%,100%{ transform:scale(1); box-shadow: 0 12px 28px rgba(248,113,113,.7); }
-      50%{ transform:scale(1.06); box-shadow: 0 18px 44px rgba(248,113,113,.96); }
-    }
-    .icon span{ font-size:1.55rem; }
+    .icon span{ font-size:1.7rem; }
 
     .kicker{
-      font-size:.74rem;
+      font-size:.80rem;
       text-transform:uppercase;
-      letter-spacing:.16em;
+      letter-spacing:.18em;
       color:#dbeafe;
       opacity:.95;
     }
     .title{
-      font-size:1.08rem;
-      font-weight:800;
+      font-size:1.18rem;
+      font-weight:900;
       color:#f8fafc;
-    }
-    .hint{
-      font-size:.78rem;
-      color:#e0f2fe;
-      opacity:.95;
     }
 
     .back{
-      transform:rotateY(180deg);
+      transform: rotateY(180deg) translateZ(1px);
+      -webkit-transform: rotateY(180deg) translateZ(1px);
       background: radial-gradient(circle at 90% 0, rgba(248,113,113,.95), rgba(2,6,23,1) 62%);
       border:1px solid rgba(254,202,202,.62);
     }
 
     .wish-title{
-      font-size:1.06rem;
-      font-weight:900;
-      line-height:1.25;
-      margin-bottom:6px;
+      font-size:1.22rem;
+      font-weight:950;
+      line-height:1.22;
+      margin-bottom:8px;
+      text-shadow: 0 8px 22px rgba(0,0,0,.30);
     }
     .tag{
-      font-size:.82rem;
+      font-size:.95rem;
       color:#ffe4e6;
       opacity:.92;
-      letter-spacing:.06em;
+      letter-spacing:.04em;
+      padding:6px 12px;
+      border-radius:999px;
+      background: rgba(15,23,42,.35);
+      border: 1px solid rgba(248,250,252,.18);
     }
 
     /* ---------- SPINNER ---------- */
@@ -380,6 +373,7 @@
       padding:16px 14px 16px;
       position:relative;
       overflow:hidden;
+      margin-bottom:10px;
     }
 
     .panel::before{
@@ -396,26 +390,17 @@
 
     .panel-inner{ position:relative; z-index:1; }
 
-    .panel-head{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-    }
-
     .panel h2{
-      font-size:1.1rem;
+      font-size:1.18rem;
       margin:0;
       display:flex;
       align-items:center;
       gap:8px;
     }
     .panel p{
-      margin-top:4px;
+      margin-top:6px;
       color:var(--muted);
-      font-size:.88rem;
+      font-size:1rem;
       line-height:1.4;
     }
 
@@ -424,43 +409,39 @@
       gap:10px;
       flex-wrap:wrap;
       align-items:center;
-      margin-top:10px;
+      margin-top:12px;
     }
 
     .result{
-      margin-top:10px;
-      padding:12px 12px;
+      margin-top:12px;
+      padding:14px 14px;
       border-radius:16px;
       background: rgba(15,23,42,.78);
       border:1px solid rgba(148,163,184,.35);
-      min-height:48px;
+      min-height:54px;
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
-      font-weight:650;
-      letter-spacing:.02em;
+      font-weight:750;
+      letter-spacing:.01em;
       color:#fefce8;
+      font-size:1.02rem;
     }
 
-    .tiny{
-      color:var(--muted);
-      font-size:.78rem;
-      margin-top:8px;
-      text-align:center;
-    }
-
-    /* Reduced motion support */
     @media (prefers-reduced-motion: reduce){
       *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
     }
 
+    /* Mobile: mehr Lesbarkeit */
     @media (max-width:700px){
       body{ padding:10px; }
+      header h1{ font-size:2.05rem; }
+      header p{ font-size:1.02rem; }
       .grid{ grid-template-columns: 1fr; }
-      .card-inner{ height:154px; }
-      .icon{ width:48px; height:48px; }
-      .title{ font-size:1.02rem; }
+      .card-inner{ height:160px; }
+      .wish-title{ font-size:1.26rem; }
+      .pill{ font-size:1rem; }
     }
   </style>
 </head>
@@ -474,8 +455,7 @@
         <div class="overlay-title">Geburtstagswünsche</div>
         <div class="overlay-sub">2026 · Florian</div>
         <p class="overlay-text">
-          Hinter jeder Karte versteckt sich ein Wunsch. Du kannst alle Wünsche aufdecken
-          oder einfach das Glücksrad drehen.
+          Hinter jeder Karte versteckt sich ein Wunsch. Viel Spaß beim Stöbern 😊
         </p>
         <div class="overlay-actions">
           <button class="btn btn-ghost" id="startWishlist">Wunschkarten ansehen</button>
@@ -493,22 +473,18 @@
 
       <div class="topbar" aria-label="Kurzübersicht">
         <div class="pill">🎁 <strong id="wishCount">0</strong> Wünsche</div>
-        <div class="pill">⌨️ Enter/Space klappt Karten</div>
-        <div class="pill">📱 Tippen klappt Karten</div>
       </div>
     </header>
 
     <!-- WUNSCHKARTEN -->
     <section class="grid" id="wishlist" aria-label="Wunschkarten"></section>
 
-    <!-- GLÜCKSRAD (SPINNER) -->
+    <!-- GLÜCKSRAD -->
     <section class="panel" aria-label="Glücksrad">
       <div class="panel-inner">
-        <div class="panel-head">
-          <div>
-            <h2>🎉 Glücksrad</h2>
-            <p>Drücke auf den Button und ein Wunsch wird zufällig ausgewählt.</p>
-          </div>
+        <div>
+          <h2>🎉 Glücksrad</h2>
+          <p>Drücke auf den Button und ein Wunsch wird zufällig ausgewählt.</p>
         </div>
 
         <div class="actions">
@@ -517,15 +493,11 @@
         </div>
 
         <div class="result" id="resultText" aria-live="polite">Noch kein Wunsch gedreht.</div>
-        <div class="tiny">Tipp: Wenn du willst, kann ich als nächstes noch ein echtes, visuelles Rad (Canvas) bauen.</div>
       </div>
     </section>
   </main>
 
   <script>
-    // ==========================
-    // WÜNSCHE (8 Stück)
-    // ==========================
     const wishes = [
       { title: "Edelstahlpfanne", tag: "Küche" },
       { title: "Bohrmaschine", tag: "Werkzeug" },
@@ -537,9 +509,7 @@
       { title: "Plastikflaschen für SodaStream Duo", tag: "Zubehör" }
     ];
 
-    // ==========================
-    // OVERLAY + APP
-    // ==========================
+    // Overlay + App
     const overlay = document.getElementById("overlay");
     const app = document.getElementById("app");
     const startWishlistBtn = document.getElementById("startWishlist");
@@ -554,27 +524,20 @@
       overlay.classList.add("hidden");
       app.classList.add("visible");
       if (pushHistory) history.pushState({ screen: "app" }, "");
-      // nice: focus first card for keyboard users
-      const firstCard = document.querySelector(".card");
-      if (firstCard) firstCard.focus({ preventScroll: true });
-      // scroll to top
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     startWishlistBtn.addEventListener("click", () => showApp(true));
     startSpinnerBtn.addEventListener("click", () => {
       showApp(true);
-      // jump down to spinner panel
       document.querySelector(".panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
-    // Back button (popstate) -> overlay
+    // Back button -> Overlay
     history.replaceState({ screen: "overlay" }, "");
     window.addEventListener("popstate", () => showOverlay());
 
-    // ==========================
-    // WUNSCHKARTEN (A11Y)
-    // ==========================
+    // Karten
     const wishlist = document.getElementById("wishlist");
     const wishCount = document.getElementById("wishCount");
     wishCount.textContent = String(wishes.length);
@@ -599,7 +562,6 @@
               <div class="icon" aria-hidden="true"><span>🎁</span></div>
               <div class="kicker">Wunschkarte</div>
               <div class="title">Karte #${index + 1}</div>
-              <div class="hint">Tippe (oder Enter/Space), um den Wunsch zu sehen</div>
             </div>
           </div>
           <div class="face back">
@@ -620,13 +582,10 @@
       wishlist.appendChild(card);
     });
 
-    // ==========================
-    // GLÜCKSRAD (SPINNER)
-    // ==========================
+    // Glücksrad
     const spinBtn = document.getElementById("spinBtn");
     const resetBtn = document.getElementById("resetBtn");
     const resultText = document.getElementById("resultText");
-
     let spinning = false;
 
     function formatWish(w) {
@@ -658,7 +617,6 @@
         if (ticks >= maxTicks) {
           clearInterval(interval);
           resultText.textContent = "🎉 Ausgewählter Wunsch: " + formatWish(current);
-
           spinning = false;
           spinBtn.style.opacity = "1";
           spinBtn.style.pointerEvents = "auto";
@@ -666,9 +624,8 @@
       }, 90);
     });
 
-    // Optional: ESC -> overlay
+    // ESC -> Overlay (optional)
     window.addEventListener("keydown", (e) => {
-      if (e.code === "Escape" && !overlay.classList.contains("hidden")) return;
       if (e.code === "Escape") showOverlay();
     });
   </script>
