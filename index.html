@@ -83,6 +83,7 @@
       flex-direction: column;
       backface-visibility: hidden;
       padding: 15px;
+      text-align: center;
     }
 
     .front {
@@ -103,6 +104,7 @@
     .back h3 {
       text-align: center;
       font-size: 1.05rem;
+      line-height: 1.25;
     }
 
     /* Glücksrad */
@@ -129,16 +131,13 @@
       margin-top: 10px;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
+    button:hover { opacity: 0.9; }
 
     .result {
       margin-top: 15px;
       font-weight: 500;
       min-height: 24px;
     }
-
   </style>
 </head>
 <body>
@@ -165,7 +164,9 @@
       "Zester (Reibe)",
       "IKEA-Gutschein",
       "Deckenlampe fürs Wohnzimmer",
-      "Hokusai - Große Welle von Lego"
+      "Hokusai - Große Welle von Lego",
+      "SodaStream Duo",
+      "Plastikflaschen für SodaStream Duo"
     ];
 
     const wishlist = document.getElementById("wishlist");
@@ -174,6 +175,8 @@
       const card = document.createElement("div");
       card.className = "card";
       card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `Wunschkarte ${index + 1} umdrehen`);
 
       card.innerHTML = `
         <div class="card-inner">
@@ -187,14 +190,13 @@
         </div>
       `;
 
-      card.addEventListener("click", () => {
-        card.classList.toggle("flipped");
-      });
+      const toggle = () => card.classList.toggle("flipped");
 
+      card.addEventListener("click", toggle);
       card.addEventListener("keydown", (e) => {
         if (e.code === "Enter" || e.code === "Space") {
           e.preventDefault();
-          card.classList.toggle("flipped");
+          toggle();
         }
       });
 
@@ -211,15 +213,16 @@
 
       let ticks = 0;
       const maxTicks = 20 + Math.floor(Math.random() * 10);
+      let finalWish = wishes[0];
 
       const interval = setInterval(() => {
-        const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
-        resultText.textContent = "Vielleicht dieses Jahr: " + randomWish;
+        finalWish = wishes[Math.floor(Math.random() * wishes.length)];
+        resultText.textContent = "Vielleicht dieses Jahr: " + finalWish;
         ticks++;
 
         if (ticks >= maxTicks) {
           clearInterval(interval);
-          resultText.textContent = "🎉 Ausgewählter Wunsch: " + randomWish;
+          resultText.textContent = "🎉 Ausgewählter Wunsch: " + finalWish;
           spinning = false;
         }
       }, 90);
